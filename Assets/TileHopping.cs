@@ -1,60 +1,53 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TileHopping : MonoBehaviour
 {
-
     // Tile logic
     public int tileStanding = 0;
-    public int nextTile;
+    public int nextTile = 1;
     public TileManager tm;
+    public int tilesLeftToMove = 0;
 
     // Movement logic
-    public Transform startPoint;
-    public Transform endPoint;
     public float jumpHeight = 1f;
     public float duration = 1f;
 
-    // Start is called before the first frame update
-    void Start()
+    //Height of piece
+    // Get the mesh renderer component of the object
+    public float height;
+
+    private void Start()
     {
-        // Set whatever tile is next
-        nextTile = tileStanding + 1;
-        // Get tile manager
-        tm = GameObject.Find("Tiles").GetComponent<TileManager>();
+
+
+        // Calculate and return the height of the object
+        height = 1.1f;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        //Jump to and fro
-        startPoint = tm.tiles[tileStanding].transform;
-        endPoint = tm.tiles[nextTile].transform;
+        //Increase tiles
+        nextTile = tileStanding + 1;
 
         if (Input.GetMouseButtonDown(0))
         {
-            HopFromTileToTile();
+            MoveBy(3);
         }
     }
 
-    public void HopFromTileToTile()
+    private void MoveBy(int spaces)
     {
-        Vector3 centerPoint = (startPoint.position + endPoint.position) / 2f;
-        centerPoint += Vector3.up * jumpHeight;
-
-        // Start the LeanTween animation
-        LeanTween.move(gameObject, endPoint.position, duration)
-            .setEase(LeanTweenType.easeOutQuad)
-            .setOnComplete(OnMovementComplete);
-
-        LeanTween.move(gameObject, centerPoint, duration / 2f)
-            .setEase(LeanTweenType.easeInQuad);
+        tilesLeftToMove = spaces;
+        LeanTween.move(gameObject, new Vector3(tm.tiles[tileStanding + 1].transform.position.x, tm.tiles[tileStanding + 1].transform.position.y + height, tm.tiles[tileStanding + 1].transform.position.z), duration).setEase(LeanTweenType.easeInOutQuad).setOnComplete(CompleteMovement);
     }
 
-    private void OnMovementComplete()
+    private void CompleteMovement()
     {
-        Debug.Log("Movement completed!");
         tileStanding++;
+        tilesLeftToMove--;
+        if (tilesLeftToMove > 0)
+        {
+            MoveBy(tilesLeftToMove);
+        }
     }
 }
