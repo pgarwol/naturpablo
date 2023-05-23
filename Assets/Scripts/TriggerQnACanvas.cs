@@ -4,19 +4,25 @@ using UnityEngine;
 
 
 public class TriggerQnACanvas : MonoBehaviour {
-    /*
-    public string folderName;
-    static QuestionsSO[] questions;
-    
-    private void Awake() {
-        LoadQuestions();
+
+    private QnACanvasBehaviour qnACanvasBehaviour;
+    GameObject canvasObject;
+
+    void Start() {
+        canvasObject = GameObject.Find("Canvas");
+
+        if (canvasObject != null) {
+            qnACanvasBehaviour = canvasObject.GetComponent<QnACanvasBehaviour>();
+        }
     }
 
-    private void LoadQuestions() {
-        questions = Resources.LoadAll<QuestionsSO>(folderName);
-    }
+    public void TriggerClicked() {
+        QnACanvasBehaviour.TurnOnQACanvas();
 
-    public static QuestionsSO[] GetQuestions() {
-        return questions;
-    }*/
+        string objectName = gameObject.name;
+
+        qnACanvasBehaviour.LoadQuestions();
+        qnACanvasBehaviour.FindProperQA(objectName);
+        qnACanvasBehaviour.ShowQuestionAndAnswer();
+    }
 }
