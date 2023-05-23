@@ -11,13 +11,26 @@ public class QnACanvasBehaviour : MonoBehaviour {
     public static string question;
     public static string answer;
 
-    // TMP Elements
     public static TextMeshProUGUI questionTMP;
     public static TextMeshProUGUI answerTMP;
 
     public static Canvas speechBubble;
 
+    public string folderName = "DataBase/Questions";
+    QuestionsSO[] questions;
+
+    private void Awake() {
+        LoadQuestions();
+    }
+
+    private void LoadQuestions() {
+        questions = Resources.LoadAll<QuestionsSO>(folderName);
+    }
+
     void Start() {
+        //qSO = TriggerQnACanvas.GetQuestions()[0];
+        qSO = questions[Random.Range(0, questions.Length)];
+
         questionTMP = GameObject.Find("QuestionTMP").GetComponent<TextMeshProUGUI>();
         answerTMP = GameObject.Find("AnswerTMP").GetComponent<TextMeshProUGUI>();
 
