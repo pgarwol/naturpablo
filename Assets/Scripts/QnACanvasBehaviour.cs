@@ -23,16 +23,12 @@ public class QnACanvasBehaviour : MonoBehaviour {
     QuestionsSO desiredQuestion;
 
     void Awake() {
-
         questionTMP = GameObject.Find("QuestionTMP").GetComponent<TextMeshProUGUI>();
         answerTMP = GameObject.Find("AnswerTMP").GetComponent<TextMeshProUGUI>();
         image = GameObject.Find("AttachedImage").GetComponent<Image>();
 
-
         speechBubble = GameObject.Find("SpeechBubbleCanvas").GetComponent<Canvas>();
-        
-
-        qaCanvas = GameObject.Find("SpeechBubbleCanvas").GetComponent<Canvas>();
+        qaCanvas = GameObject.Find("QnA").GetComponent<Canvas>();
         qaCanvas.enabled = false;
     }
 
