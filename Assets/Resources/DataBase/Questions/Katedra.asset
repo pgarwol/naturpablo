@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b747b1afa2b45734986eaa9d2e2f4c9b, type: 3}
   m_Name: Katedra
   m_EditorClassIdentifier: 
-  objectName: Katedra
-  question: Katedra
-  answer: Katedra
+  objectName: 
+  question: 
+  answer: 
   img: {fileID: 0}
